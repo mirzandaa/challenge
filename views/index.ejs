@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Challenge Mirzanda Abimanyu</title>
+    <%- include('./partials/head'); %>
+  </head>
+  <body>
+    <section class="bg" style="background-image: url(./assets/main-bg.jpg)">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark opacity-50">
+        <div class="container">
+          <a class="navbar-brand" href="#">LOGO</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">HOME</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">WORK</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">CONTACT</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">ABOUT ME</a>
+              </li>
+            </ul>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <% if (isLoggedIn) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">
+                            <%= name %>
+                        </a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">SIGN UP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">LOGIN</a>
+                    </li>
+                <% } %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="row d-flex flex-row align-items-center align-content-center">
+          <div class="col header text-center d-flex flex-column justify-content-center align-items-center" style="height: 100vh">
+            <h1 class="text-white">PLAY TRADITIONAL GAME</h1>
+            <p class="text-white">EXPERIENCE NEW TRADITIONAL GAMEPLAY</p>
+            <div class="d-grid gap-2 col-2 py-5 mx-auto">
+              <button class="btn btn-warning p-2" type="button"><a style="text-decoration: none; color:inherit" href="/rock-paper-scissor-game">Play Now</a></button>
+            <div class="text-white text-center kabel">
+              <span>The Story</span> <br>
+              <svg width="23" height="12" viewBox="0 0 23 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.5786 1.83362H1.32422L11.338 10.0027L21.5786 1.83362Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+    </section>
+
+    <!-- Section The Games-->
+
+    <section class="bg" style="background-image: url('./assets/the-games-bg.jpg')">
+      <div class="container">
+        <div class="row" style="color:white;">
+          <div class="col">
+            <p>What's so special?</p>
+            <h1>THE GAMES</h1>
+          </div>
+          <div class="col">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="./assets/rockpaperstrategy-1600.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="./assets/rockpaperstrategy-1600.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="./assets/rockpaperstrategy-1600.jpg" class="d-block w-100" alt="...">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Akhir Section The Games-->
+
+    <!-- Section The Games-->
+
+    <section class="bg" style="background-image: url('./assets/features.jpg')">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Whats so special feature?</h6>
+                        <div id="content">
+                            <ul class="timeline">
+                                <li class="event" data-date="12:30 - 1:00pm">
+                                    <h3>Traditional Games</h3>
+                                    <p>if you miss your chidhood, we provide many traditional games here </p>
+                                </li>
+                                <li class="event" data-date="2:30 - 4:00pm">
+                                    <h3>Game suit</h3>
+                                </li>
+                                <li class="event" data-date="5:00 - 8:00pm">
+                                    <h3>TED</h3>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    
+    <!-- Akhir Section The Games-->
+
+    <!-- Section The Games-->
+
+<section class="bg" style="background-image: url('./assets/requirements.png')">
+  <div class="container-3">
+    <div class="container">
+      <div class="row" style="color:white;">
+        <div class="col">
+    <p>Can My Conzuler Run This Game</p>
+
+    <h1>SYSTEM REQUIREMENTS</h1>
+</section>  
+</div>
+
+</div>
+    <!-- Akhir Section The Games-->
+
+    <!-- Section The Games-->
+
+    <section class="bg" style="background-image: url('./assets/top-score-bg.png')"></section>
+    <!-- Akhir Section The Games-->
+
+    <!-- Section The Games-->
+
+    <section class="bg" style="background-image: url('./assets/newsletter.png')"></section>
+    <!-- Akhir Section The Games-->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>

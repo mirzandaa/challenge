@@ -1,0 +1,391 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.all-content {
+  width: 100%;
+  height: 1024px;
+  background: rgba(22, 12, 12, 1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.bg-color {
+  width: 100%;
+  height: 100%;
+  background: rgba(156, 131, 95, 1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.back-btn {
+  position: absolute;
+  width: 55px;
+  height: 87px;
+  left: 37px;
+  top: 12px;
+
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 98px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #724c21;
+
+  cursor: pointer;
+}
+.game-logo {
+  width: 72px;
+  height: 72px;
+  background: url("../assets/game/game-logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 27px;
+  left: 119px;
+  overflow: hidden;
+}
+.player-txt {
+  width: 299px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 162px;
+  left: 296px;
+  font-family: Open Sans;
+  font-weight: Bold;
+  font-size: 36px;
+  opacity: 1;
+  text-align: center;
+}
+.COM-txt {
+  width: 299px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 162px;
+  left: 865px;
+  font-family: Open Sans;
+  font-weight: Bold;
+  font-size: 36px;
+  opacity: 1;
+  text-align: center;
+}
+.prompt-shape {
+  width: 271px;
+  height: 166px;
+  background: rgba(76, 149, 83, 1);
+  opacity: 1;
+  position: absolute;
+  top: 475px;
+  left: 595px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  transform: rotate(-28deg);
+  overflow: hidden;
+}
+.paper-btn {
+  width: 223px;
+  height: 204px;
+  opacity: 1;
+  position: absolute;
+  top: 464px;
+  left: 334px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.paper-bg {
+  width: 223px;
+  height: 204px;
+  background: rgba(196, 196, 196, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.paper {
+  width: 115px;
+  height: 150px;
+  background: url("../assets/game/paper.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 27px;
+  left: 54px;
+  overflow: hidden;
+}
+.rock-btn {
+  width: 223px;
+  height: 204px;
+  opacity: 1;
+  position: absolute;
+  top: 234px;
+  left: 334px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.rock-bg {
+  width: 223px;
+  height: 204px;
+  background: rgba(196, 196, 196, 1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.rock {
+  width: 128px;
+  height: 92px;
+  background: url("../assets/game/rock.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 56px;
+  left: 48px;
+  overflow: hidden;
+}
+.prompt-txt {
+  width: 266px;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 524px;
+  left: 589px;
+  font-family: Open Sans;
+  font-weight: Bold;
+  font-size: 38px;
+  opacity: 1;
+  text-align: center;
+  transform: rotate(-30deg);
+}
+.scissor-btn {
+  width: 223px;
+  height: 204px;
+  opacity: 1;
+  position: absolute;
+  top: 694px;
+  left: 334px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.scissor-bg {
+  width: 223px;
+  height: 204px;
+  background: rgba(196, 196, 196, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.scissor {
+  width: 134px;
+  height: 160px;
+  background: url("../assets/game/scissor.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 22px;
+  left: 45px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+.paper-com-btn {
+  width: 223px;
+  height: 204px;
+  opacity: 1;
+  position: absolute;
+  top: 464px;
+  left: 903px;
+  overflow: hidden;
+}
+.paper-com-bg {
+  width: 223px;
+  height: 204px;
+  background: rgba(196, 196, 196, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.paper-com {
+  width: 115px;
+  height: 150px;
+  background: url("../assets/game/paper.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 27px;
+  left: 54px;
+  overflow: hidden;
+}
+.rock-com-btn {
+  width: 223px;
+  height: 204px;
+  opacity: 1;
+  position: absolute;
+  top: 234px;
+  left: 903px;
+  overflow: hidden;
+}
+.rock-com-bg {
+  width: 223px;
+  height: 204px;
+  background: rgba(196, 196, 196, 1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.rock-com {
+  width: 128px;
+  height: 92px;
+  background: url("../assets/game/rock.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 56px;
+  left: 48px;
+  overflow: hidden;
+}
+.scissor-com-btn {
+  width: 223px;
+  height: 204px;
+  opacity: 1;
+  position: absolute;
+  top: 694px;
+  left: 903px;
+  overflow: hidden;
+}
+.scissor-com-bg {
+  width: 223px;
+  height: 204px;
+  background: rgba(196, 196, 196, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.scissor-com {
+  width: 134px;
+  height: 160px;
+  background: url("../assets/game/scissor.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 22px;
+  left: 45px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+.game-title {
+  width: 410px;
+  color: rgba(249, 178, 61, 1);
+  position: absolute;
+  top: 37px;
+  left: 218px;
+  font-family: Open Sans;
+  font-weight: Bold;
+  font-size: 36px;
+  opacity: 1;
+  text-align: center;
+}
+.reset {
+  width: 77px;
+  height: 71px;
+  background: url("../assets/game/reset.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 862px;
+  left: 690px;
+  overflow: hidden;
+  visibility: hidden;
+  cursor: pointer;
+}
+.prompt-group {
+  visibility: hidden;
+}
+.vs-txt {
+  position: absolute;
+  width: 296px;
+  height: 186px;
+  left: 589px;
+  top: 419px;
+
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 144px;
+  line-height: 196px;
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #bd0000;
+}

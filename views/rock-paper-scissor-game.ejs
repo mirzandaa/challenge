@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/game.css">
+    <title>Rock Paper Scissor Game</title>
+    <%- include('./partials/head'); %>
+  </head>
+  <body>
+    <div class="all-content">
+      <div class="bg-color"></div>
+      <span class="back-btn"><a style="text-decoration: none; color:inherit" href="/">&#60</a></span>
+      <div class="game-logo"></div>
+      <span class="game-title">ROCK PAPER SCISSORS</span>
+      <span class="player-txt">PLAYER 1</span><span class="COM-txt">COM</span>
+      <div class="rock-btn" onclick="playerMove('rock')">
+        <div class="rock-bg" id="rock-bg"></div>
+        <div class="rock"></div>
+      </div>
+      <div class="paper-btn" onclick="playerMove('paper')">
+        <div class="paper-bg" id="paper-bg"></div>
+        <div class="paper"></div>
+      </div>
+      <div class="scissor-btn" onclick="playerMove('scissor')">
+        <div class="scissor-bg" id="scissor-bg"></div>
+        <div class="scissor"></div>
+      </div>
+      <div class="rock-com-btn">
+        <div class="rock-com-bg" id="rock-com-bg"></div>
+        <div class="rock-com"></div>
+      </div>
+      <div class="paper-com-btn">
+        <div class="paper-com-bg" id="paper-com-bg"></div>
+        <div class="paper-com"></div>
+      </div>
+      <div class="scissor-com-btn">
+        <div class="scissor-com-bg" id="scissor-com-bg"></div>
+        <div class="scissor-com"></div>
+      </div>
+      <span class="vs-txt">
+        VS
+      </span>
+      <div class="prompt-group" id="prompt-group">
+        <div class="prompt-shape"></div>
+        <span class="prompt-txt" id="prompt-txt">DRAW</span>
+      </div>
+      <button>
+          <div class="reset" id="reset"  onclick="location.reload()"></div>
+      </button>
+    </div>
+    <script>
+              
+        // Reset Prompt Text (Result Rectangle)
+        function reset(){
+            const promptGroup = document.getElementById("prompt-group");	// Get promptGroup element
+            promptGroup.style.visibility = "hidden";		                // Hide promptGroup element
+            document.getElementById(window.playerMove + "-bg").style.visibility = "hidden";
+            document.getElementById(window.comMove + "-com-bg").style.visibility = "hidden";
+            document.getElementById("reset").style.visibility = "hidden";
+            document.getElementById("reset").style.visibility = "visible";
+            document.getElementById("prompt-group").style.visibility = "visible";
+            document.getElementById(window.playerMove + "-bg").style.visibility = "visible";
+            document.getElementById(window.comMove + "-com-bg").style.visibility = "visible";
+        }
+
+        // Calculate and return COM move (Random move between R/P/S)
+        function comRandomMove(){
+            const comMove = Math.floor(Math.random() * (3 - 1)) + 1;
+            switch(comMove){
+                case 1: return "rock";
+                case 2: return "paper";
+                case 3: return "scissor";
+            }
+        }
+
+        function calculateResult(playerMove, comMove){
+            // Draw Condition
+            if (playerMove === comMove){
+                return "DRAW";
+            // Win Condition
+            } 
+            else if (
+                playerMove === "rock" && comMove === "scissor"
+                || playerMove === "paper" && comMove === "rock"
+                || playerMove === "scissor" && comMove === "rock"
+            ) {
+                return "PLAYER 1 WIN";
+            }
+            // Lose Condition (Else)
+            else {
+                return "COM WIN";
+            }
+        }
+
+        // Calculate player's move
+        function playerMove(move){
+            const playerMove = move;
+            const comMove = comRandomMove();
+            const result = calculateResult(window.playerMove, window.comMove);
+
+            const data = {
+                playerMove,
+                comMove,
+                result,
+                timestamp: new Date()
+            }
+
+            fetch("/rock-paper-scissor-game", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify(data)
+            }).then(res => {
+                window.playerMove = playerMove;
+                console.log("LOG: Player chooses " + window.playerMove); // Log player's selection on terminal
+
+                window.comMove = comMove;
+                console.log("LOG: COM chooses " + window.comMove); // Log COM's move on terminal
+
+                const promptText = document.getElementById("prompt-txt");
+
+                promptText.innerHTML = result;
+                
+                reset(); // Reset and refresh the result
+
+                console.log("LOG: Result - " + promptText.innerHTML); // Log game round result
+                });
+        }
+    </script>
+  </body>
+</html>

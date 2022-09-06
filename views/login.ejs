@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login Page</title>
+    <%- include('./partials/head'); %>
+</head>
+<body class="body">
+    <h2>Welcome! Please login.</h2><br/>
+    <form method="POST" action="/login">
+        <input type="text" placeholder="Insert your email" name="username">
+        <input type="password" placeholder="Insert your password" name="password">
+        <button>Login</button>
+    </form>
+</body>
+</html>
