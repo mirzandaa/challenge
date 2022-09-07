@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login Page</title>
+    <title>Registration Page</title>
     <%- include('./partials/head'); %>
 </head>
 <body class="body">
@@ -17,32 +17,38 @@
                       <div class="text-center">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
                           style="width: 185px;" alt="logo">
-                        <h4 class="mt-1 mb-4 pb-1">LOGIN PAGE</h4>
+                        <h4 class="mt-1 mb-4 pb-1">SIGN UP PAGE</h4>
                       </div>
       
-                      <form method="POST" action="/login">      
+                      <form method="POST" action="/signup">
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form2Example11">Username</label>
+                          <label class="form-label" for="form2Example11">Name</label>
+                          <input type="text" id="form2Example11" name="name" class="form-control"
+                            placeholder="Insert your name" required />
+                        </div>
+                        <div class="form-outline mb-4">
+                          <label class="form-label" for="form2Example11">Username</label>
                           <input type="email" id="form2Example11" name="username" class="form-control"
-                            placeholder="Input your email address" required/>
+                            placeholder="Insert your email address" required />
                         </div>
       
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form2Example22">Password</label>
+                          <label class="form-label" for="form2Example22">Password</label>
                           <input type="password" id="form2Example22" name="password" class="form-control" 
-                            placeholder="Input your password" required/>
+                            placeholder="Insert your password" required/>
                         </div>
-      
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log
-                            in</button>
+                        <div class="form-outline mb-4">
+                          <label class="form-label" for="form2Example22">Confirm Password</label>
+                          <input type="password" id="form2Example22" name="confirmPassword" class="form-control" 
+                            placeholder="Retype your password" required/>
+                        </div>
+                        <div class="text-center pt-1 mb-4 pb-1">
+                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Sign up</button>
                         </div>
       
                         <div class="d-flex align-items-center justify-content-center pb-4">
-                          <p class="mb-0 me-2">Don't have an account?</p>
-                          <a href="/signup">
-                            <button type="button" class="btn btn-outline-danger">Create new</button>
-                          </a>
+                          <p class="mb-0 me-2">Already have an account?</p>
+                          <a class="text-muted" href="/login">Login</a>
                         </div>
       
                       </form>

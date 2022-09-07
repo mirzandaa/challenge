@@ -16,6 +16,7 @@ module.exports = {
       userList.push({
         name: "name" + i,
         address: "Jakarta No. " + i,
+        phone: ("0" + Math.random()*i*1000).replace(".","").substring(0,11),
         createdAt: new Date(),
         updatedAt: new Date(),
         userId: i

@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasOne(models.UserGameBiodata, { foreignKey: 'userId', onDelete: 'CASCADE'});
+      this.hasMany(models.UserGameHistory, { foreignKey: 'userId' });
     }
   }
   UserGame.init({

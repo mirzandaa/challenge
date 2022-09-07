@@ -123,7 +123,7 @@ app.get('/user', (req, res) => {
 app.get('/profile', (req,res) => {
     session = req.session;
     if (session.userId) {
-        res.render('profile', {email:session.userId, user:session.user, isEditing: false})
+        res.render('profile', {email:session.userId, user:session.user})
     } else {
         res.redirect('/')
     }
@@ -131,20 +131,21 @@ app.get('/profile', (req,res) => {
 app.get('/profile/edit', (req, res) => {
     session = req.session;
     if (session.userId) {
-        res.render('profile', {email:session.userId, user:session.user, isEditing: true})
+        res.render('profile', {email:session.userId, user:session.user})
     } else {
         res.redirect('/')
     }
 })
-app.post('/profile/edit', (req, res) => {
+app.post('/profile/edit', async (req, res) => {
     session = req.session;
     if (session.userId) {
         const name = req.body.name;
+        const phone = req.body.phone;
         const address = req.body.address;
-        const user = UserGame.findOne({where: {username:session.userId}})
-        const userBiodata = UserGameBiodata.update(
-            {name, address},
-            {where: {user_game_id:user.id}}
+        const user = await UserGame.findOne({where: {username:session.userId}})
+        const userBiodata = await UserGameBiodata.update(
+            {name, address, phone},
+            {where: {userId:user.id}}
         );
         session.user = userBiodata;
         res.render('profile', {email:session.userId, user:session.user});
@@ -179,12 +180,43 @@ app.post('/users', async (req, res) => {
 /**
  * Create new user page
  */
- app.post('/signup', (req, res) => {
+ app.get('/signup', (req, res) => {
     const session = req.session;
     if (session.userId) {
         redirect('/');
     } else {
         res.render('signup');
+    }
+})
+app.post('/signup', async (req, res) => {
+    const session = req.session;
+    if (session.userId) {
+        res.send("There is an active user session")
+    } else {
+        const name = req.body.name;
+        const username = req.body.username;
+        const password = req.body.password;
+        const confirmPassword = req.body.confirmPassword;
+
+        isUserExists = (await UserGame.findOne({where: {username}}) !== null);
+
+        if (password !== confirmPassword){
+            res.send("Password did not match!");
+        } else if (isUserExists) {
+            res.send(username + " is already used.")
+        } else {
+            user = await UserGame.create({
+                username,
+                password
+            }).then( user => (
+                user.createUserGameBiodatum({
+                    name,
+                    userId: user.id
+                })
+            ));
+            res.send("Account created with email " + username);
+        }
+
     }
 })
 
@@ -197,19 +229,28 @@ app.get('/rock-paper-scissor-game', (req, res) => {
         // res.sendFile(path.join(__dirname, '/web/rock-paper-scissor-game.html'));
         const userId = session.user.userId;
         const history = UserGameHistory.findAll({where: {userId}});
-        const result = null;
-        res.render('rock-paper-scissor-game', {result, history})
+        res.render('rock-paper-scissor-game', {history})
     } else {
         res.redirect('/')
     }
 });
-app.post('/rock-paper-scissor-game', (req, res) => {
+app.post('/rock-paper-scissor-game', async (req, res) => {
     session = req.session;
     if (session.userId){ //if session.userId is exists
         const userId = session.user.userId;
-        const history = UserGameHistory.findAll({where: {userId}});
-        const result = calculate();
-        res.render('rock-paper-scissor-game', {result, history})
+        const playerMove = req.body.playerMove;
+        const comMove = req.body.comMove;
+        const result = req.body.result;
+
+        await UserGameHistory.create({
+            playerMove,
+            comMove,
+            result,
+            userId
+        });
+
+        const history = await UserGameHistory.findAll({where: {userId}});
+        res.render('rock-paper-scissor-game', {history})
     } else {
         res.redirect('/')
     }
