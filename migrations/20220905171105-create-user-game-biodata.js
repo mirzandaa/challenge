@@ -19,7 +19,8 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: { model: 'UserGames', key: 'id' }
+        references: { model: 'UserGames', key: 'id' },
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

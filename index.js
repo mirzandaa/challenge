@@ -89,7 +89,6 @@ app.post('/login', async (req,res) => {
         session=req.session;
         session.userId=req.body.username;
         session.user=userData;
-        console.log(req.session);
         res.send(
             `Succesfully logged in as <b>` + userData.name + `</b> <a href=\'/'>click here to proceed</a>
             <br/>
@@ -160,7 +159,7 @@ app.get('/user', (req, res) => {
     if (session.userId){
         res.send(session.userId);
     } else {
-        res.send('No active user in the current session');
+        res.redirect('/');
     }
 });
 app.get('/profile', async (req,res) => {
@@ -168,7 +167,9 @@ app.get('/profile', async (req,res) => {
     if (session.userId) {
         const userId = session.user.userId;
         histories = await UserGameHistory.findAll({where:{userId}});
-        res.render('profile', {email:session.userId, user:session.user, histories})
+        winCount = histories.filter( (history) => { return history.result === "PLAYER 1 WIN"}).length;
+        winRate = ""+100*winCount/histories.length+"%";
+        res.render('profile', {email:session.userId, user:session.user, histories, winRate})
     } else {
         res.redirect('/')
     }
@@ -188,7 +189,6 @@ app.post('/profile/edit', async (req, res) => {
         const phone = req.body.phone;
         const address = req.body.address;
         const id = session.user.id;
-        console.log("Body\n" + req.body)
         await UserGameBiodata.update(
             {name, phone, address},
             {where: {id}}
@@ -196,7 +196,19 @@ app.post('/profile/edit', async (req, res) => {
         session.user = await UserGameBiodata.findByPk(id);
         res.redirect('/profile')
     } else {
-        res.send('No active user in the current session')
+        res.redirect('/');
+    }
+})
+app.post('/profile/delete', async (req, res) => {
+    session = req.session;
+    if (session.userId) {
+        await UserGame.destroy({where: {id:session.user.userId}}).then(()=>{
+            req.session.destroy();
+            res.redirect('/');
+        })
+        .catch(err=>{
+            console.log(err);
+        });
     }
 })
 app.post('/delete-history/:historyId', async (req, res) => {
@@ -206,7 +218,7 @@ app.post('/delete-history/:historyId', async (req, res) => {
         await UserGameHistory.destroy({where: {id}});
         res.redirect('/profile')
     } else {
-        res.send('No active user in the current session')
+        res.redirect('/');
     }
 })
 
