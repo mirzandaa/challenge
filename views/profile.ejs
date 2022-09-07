@@ -7,6 +7,16 @@
 <body class="body">
     <section style="background-color: #eee;">
         <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                  <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                      <li class="breadcrumb-item"><a href="/">Home</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
           <div class="row">
             <div class="col-lg-4">
               <div class="card mb-4">
@@ -17,6 +27,9 @@
                   <p class="text-muted mb-4"><%= user.address %></p>
                 </div>
               </div>
+                <div>
+                    <a class="btn btn-primary" href="/profile/edit" role="button">Edit Profile</a>
+                </div><br>
             </div>
             <div class="col-lg-8">
               <div class="card mb-4">
@@ -58,18 +71,42 @@
                   </div>
                 </div>
               </div>
+              <hr>
               <div class="row">
-                <div class="col-md-12">
-                  
+                <h4 class="mb-3">
+                    Game Results
+                </h4>
+                <div class="col-md-12 mb-4">
+                    <div class="table-responsive card">
+                        <table class="table mt-2" style=" background-color: rgb(255, 255, 255);">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Player Move</th>
+                                <th scope="col">COM Move</th>
+                                <th scope="col">Result</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <% histories.forEach((history, index) => { %>
+                                    <tr>
+                                        <th scope="row"><%= index+1 %> </th>
+                                        <td><%= history.playerMove %></td>
+                                        <td><%= history.comMove %></td>
+                                        <td><%= history.result %></td>
+                                        <td><%= history.timestamp.toString().substring(0,25) %></td>
+                                        <td><form method="POST" action="/delete-history/<%= history.id %>"><button class="btn btn-danger">Delete</button></form></td>
+                                      </tr>
+                                <% }) %> 
+                            </tbody>
+                          </table>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="d-flex flex-row-reverse">
-            <div>
-                <a class="btn btn-primary" href="/profile/edit" role="button">Edit Profile</a>
-            </div><br>
-        </div>
         </div>
       </section>
 </body>

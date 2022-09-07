@@ -3,7 +3,7 @@ const sessions = require('express-session');
 const path = require('path');
 const { Sequelize, where } = require('sequelize');
 const port = process.env.PORT || 8080;
-const { UserGame, UserGameBiodata } = require("./models")
+const { UserGame, UserGameBiodata, UserGameHistory } = require("./models")
 
 /**
  * Initialize express framework
@@ -102,82 +102,6 @@ app.post('/login', async (req,res) => {
 })
 
 /**
- * Logout URL
- */
-app.get('/logout',(req,res) => {
-    req.session.destroy();
-    res.redirect('/');
-});
-
-/**
- * Get UserGame ID Data
- */
-app.get('/user', (req, res) => {
-    session = req.session;
-    if (session.userId){
-        res.send(session.userId);
-    } else {
-        res.send('No active user in the current session');
-    }
-});
-app.get('/profile', (req,res) => {
-    session = req.session;
-    if (session.userId) {
-        res.render('profile', {email:session.userId, user:session.user})
-    } else {
-        res.redirect('/')
-    }
-})
-app.get('/profile/edit', (req, res) => {
-    session = req.session;
-    if (session.userId) {
-        res.render('profile', {email:session.userId, user:session.user})
-    } else {
-        res.redirect('/')
-    }
-})
-app.post('/profile/edit', async (req, res) => {
-    session = req.session;
-    if (session.userId) {
-        const name = req.body.name;
-        const phone = req.body.phone;
-        const address = req.body.address;
-        const user = await UserGame.findOne({where: {username:session.userId}})
-        const userBiodata = await UserGameBiodata.update(
-            {name, address, phone},
-            {where: {userId:user.id}}
-        );
-        session.user = userBiodata;
-        res.render('profile', {email:session.userId, user:session.user});
-    } else {
-        res.send('No active user in the current session')
-    }
-})
-
-/**
- * Get all users
- */
-app.get('/users', async (req, res) => {
-    const users = await UserGame.findAll()
-    res.send(users);
-})
-/**
- * Create new user
- */
-app.post('/users', async (req, res) => {
-    const countExist = UserGame.count({where: {username: req.body.password}});
-    if (!countExist) {
-        const newUser = await UserGame.create(
-            {
-                username: req.body.username,
-                password: req.body.password,
-            }
-        )
-    } else {
-        res.send("User already exists with email " + req.body.username)
-    }
-})
-/**
  * Create new user page
  */
  app.get('/signup', (req, res) => {
@@ -221,15 +145,105 @@ app.post('/signup', async (req, res) => {
 })
 
 /**
+ * Logout URL
+ */
+app.get('/logout',(req,res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
+
+/**
+ * Get UserGame ID Data
+ */
+app.get('/user', (req, res) => {
+    session = req.session;
+    if (session.userId){
+        res.send(session.userId);
+    } else {
+        res.send('No active user in the current session');
+    }
+});
+app.get('/profile', async (req,res) => {
+    session = req.session;
+    if (session.userId) {
+        const userId = session.user.userId;
+        histories = await UserGameHistory.findAll({where:{userId}});
+        res.render('profile', {email:session.userId, user:session.user, histories})
+    } else {
+        res.redirect('/')
+    }
+})
+app.get('/profile/edit', (req, res) => {
+    session = req.session;
+    if (session.userId) {
+        res.render('edit-profile', {email:session.userId, user:session.user})
+    } else {
+        res.redirect('/')
+    }
+})
+app.post('/profile/edit', async (req, res) => {
+    session = req.session;
+    if (session.userId) {
+        const name = req.body.name;
+        const phone = req.body.phone;
+        const address = req.body.address;
+        const id = session.user.id;
+        console.log("Body\n" + req.body)
+        await UserGameBiodata.update(
+            {name, phone, address},
+            {where: {id}}
+        );
+        session.user = await UserGameBiodata.findByPk(id);
+        res.redirect('/profile')
+    } else {
+        res.send('No active user in the current session')
+    }
+})
+app.post('/delete-history/:historyId', async (req, res) => {
+    session = req.session;
+    if (session.userId) {
+        const id = req.params.historyId;
+        await UserGameHistory.destroy({where: {id}});
+        res.redirect('/profile')
+    } else {
+        res.send('No active user in the current session')
+    }
+})
+
+/**
+ * Get all users
+ */
+app.get('/users', async (req, res) => {
+    const users = await UserGame.findAll()
+    res.send(users);
+})
+/**
+ * Create new user
+ */
+app.post('/users', async (req, res) => {
+    const countExist = UserGame.count({where: {username: req.body.password}});
+    if (!countExist) {
+        const newUser = await UserGame.create(
+            {
+                username: req.body.username,
+                password: req.body.password,
+            }
+        )
+    } else {
+        res.send("User already exists with email " + req.body.username)
+    }
+})
+
+/**
  * Game URL
  */
-app.get('/rock-paper-scissor-game', (req, res) => {
+app.get('/rock-paper-scissor-game', async (req, res) => {
     session = req.session;
     if (session.userId){ //if session.userId is exists
         // res.sendFile(path.join(__dirname, '/web/rock-paper-scissor-game.html'));
         const userId = session.user.userId;
-        const history = UserGameHistory.findAll({where: {userId}});
-        res.render('rock-paper-scissor-game', {history})
+        const histories = await UserGameHistory.findAll({where:{userId}});
+        res.render('rock-paper-scissor-game', {histories})
     } else {
         res.redirect('/')
     }
@@ -246,11 +260,12 @@ app.post('/rock-paper-scissor-game', async (req, res) => {
             playerMove,
             comMove,
             result,
-            userId
+            userId,
+            timestamp: new Date()
         });
 
-        const history = await UserGameHistory.findAll({where: {userId}});
-        res.render('rock-paper-scissor-game', {history})
+        const histories = await UserGameHistory.findAll({where:{userId}});
+        res.render('rock-paper-scissor-game', {histories})
     } else {
         res.redirect('/')
     }

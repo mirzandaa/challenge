@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   UserGameHistory.init({
-    timestmap: DataTypes.DATE,
+    timestamp: DataTypes.DATE,
     playerMove: DataTypes.STRING,
     comMove: DataTypes.STRING,
     result: DataTypes.STRING

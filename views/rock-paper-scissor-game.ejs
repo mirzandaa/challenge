@@ -10,47 +10,80 @@
     <%- include('./partials/head'); %>
   </head>
   <body>
-    <div class="all-content">
-      <div class="bg-color"></div>
-      <span class="back-btn"><a style="text-decoration: none; color:inherit" href="/">&#60</a></span>
-      <div class="game-logo"></div>
-      <span class="game-title">ROCK PAPER SCISSORS</span>
-      <span class="player-txt">PLAYER 1</span><span class="COM-txt">COM</span>
-      <div class="rock-btn" onclick="playerMove('rock')">
-        <div class="rock-bg" id="rock-bg"></div>
-        <div class="rock"></div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="all-content">
+          <div class="bg-color"></div>
+          <span class="back-btn"><a style="text-decoration: none; color:inherit" href="/">&#60</a></span>
+          <div class="game-logo"></div>
+          <span class="game-title">ROCK PAPER SCISSORS</span>
+          <span class="player-txt">PLAYER 1</span><span class="COM-txt">COM</span>
+          <div class="rock-btn" onclick="playerMove('rock')">
+            <div class="rock-bg" id="rock-bg"></div>
+            <div class="rock"></div>
+          </div>
+          <div class="paper-btn" onclick="playerMove('paper')">
+            <div class="paper-bg" id="paper-bg"></div>
+            <div class="paper"></div>
+          </div>
+          <div class="scissor-btn" onclick="playerMove('scissor')">
+            <div class="scissor-bg" id="scissor-bg"></div>
+            <div class="scissor"></div>
+          </div>
+          <div class="rock-com-btn">
+            <div class="rock-com-bg" id="rock-com-bg"></div>
+            <div class="rock-com"></div>
+          </div>
+          <div class="paper-com-btn">
+            <div class="paper-com-bg" id="paper-com-bg"></div>
+            <div class="paper-com"></div>
+          </div>
+          <div class="scissor-com-btn">
+            <div class="scissor-com-bg" id="scissor-com-bg"></div>
+            <div class="scissor-com"></div>
+          </div>
+          <span class="vs-txt">
+            VS
+          </span>
+          <div class="prompt-group" id="prompt-group">
+            <div class="prompt-shape"></div>
+            <span class="prompt-txt" id="prompt-txt">DRAW</span>
+          </div>
+          <button>
+              <div class="reset" id="reset"  onclick="location.reload()"></div>
+          </button>
+        </div>
       </div>
-      <div class="paper-btn" onclick="playerMove('paper')">
-        <div class="paper-bg" id="paper-bg"></div>
-        <div class="paper"></div>
+      <div class="col-md-4 mt-3">
+        <h3>Game Results</h3>
+        <div class="table-responsive card">
+          <table class="table mt-2" style=" background-color: rgb(255, 255, 255);">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Player Move</th>
+                  <th scope="col">COM Move</th>
+                  <th scope="col">Result</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <% histories.forEach((history, index) => { %>
+                      <tr>
+                          <th scope="row"><%= index+1 %> </th>
+                          <td><%= history.playerMove %></td>
+                          <td><%= history.comMove %></td>
+                          <td><%= history.result %></td>
+                          <td><%= history.timestamp.toString().substring(0,25) %></td>
+                        </tr>
+                  <% }) %> 
+              </tbody>
+            </table>
       </div>
-      <div class="scissor-btn" onclick="playerMove('scissor')">
-        <div class="scissor-bg" id="scissor-bg"></div>
-        <div class="scissor"></div>
       </div>
-      <div class="rock-com-btn">
-        <div class="rock-com-bg" id="rock-com-bg"></div>
-        <div class="rock-com"></div>
-      </div>
-      <div class="paper-com-btn">
-        <div class="paper-com-bg" id="paper-com-bg"></div>
-        <div class="paper-com"></div>
-      </div>
-      <div class="scissor-com-btn">
-        <div class="scissor-com-bg" id="scissor-com-bg"></div>
-        <div class="scissor-com"></div>
-      </div>
-      <span class="vs-txt">
-        VS
-      </span>
-      <div class="prompt-group" id="prompt-group">
-        <div class="prompt-shape"></div>
-        <span class="prompt-txt" id="prompt-txt">DRAW</span>
-      </div>
-      <button>
-          <div class="reset" id="reset"  onclick="location.reload()"></div>
-      </button>
     </div>
+    </div>
+
     <script>
               
         // Reset Prompt Text (Result Rectangle)
@@ -99,13 +132,12 @@
         function playerMove(move){
             const playerMove = move;
             const comMove = comRandomMove();
-            const result = calculateResult(window.playerMove, window.comMove);
+            const result = calculateResult(move, comMove);
 
             const data = {
                 playerMove,
                 comMove,
-                result,
-                timestamp: new Date()
+                result
             }
 
             fetch("/rock-paper-scissor-game", {
